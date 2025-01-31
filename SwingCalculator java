@@ -1,0 +1,75 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class SwingCalculator {
+    public static void main(String[] args) {
+        // Create a JFrame (window)
+        JFrame frame = new JFrame("Swing Calculator");
+        frame.setSize(300, 200);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new GridLayout(5, 2));
+
+        // Create components
+        JLabel label1 = new JLabel("Number 1:");
+        JTextField textField1 = new JTextField();
+        JLabel label2 = new JLabel("Number 2:");
+        JTextField textField2 = new JTextField();
+        JLabel resultLabel = new JLabel("Result: ");
+        
+        JButton addButton = new JButton("+");
+        JButton subtractButton = new JButton("-");
+        JButton multiplyButton = new JButton("*");
+        JButton divideButton = new JButton("/");
+
+        // Action Listener for Buttons
+        ActionListener actionListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    double num1 = Double.parseDouble(textField1.getText());
+                    double num2 = Double.parseDouble(textField2.getText());
+                    double result = 0;
+
+                    if (e.getSource() == addButton) {
+                        result = num1 + num2;
+                    } else if (e.getSource() == subtractButton) {
+                        result = num1 - num2;
+                    } else if (e.getSource() == multiplyButton) {
+                        result = num1 * num2;
+                    } else if (e.getSource() == divideButton) {
+                        if (num2 != 0) {
+                            result = num1 / num2;
+                        } else {
+                            resultLabel.setText("Error: Division by zero");
+                            return;
+                        }
+                    }
+                    resultLabel.setText("Result: " + result);
+                } catch (NumberFormatException ex) {
+                    resultLabel.setText("Error: Invalid Input");
+                }
+            }
+        };
+
+        // Add action listeners to buttons
+        addButton.addActionListener(actionListener);
+        subtractButton.addActionListener(actionListener);
+        multiplyButton.addActionListener(actionListener);
+        divideButton.addActionListener(actionListener);
+
+        // Add components to the frame
+        frame.add(label1);
+        frame.add(textField1);
+        frame.add(label2);
+        frame.add(textField2);
+        frame.add(addButton);
+        frame.add(subtractButton);
+        frame.add(multiplyButton);
+        frame.add(divideButton);
+        frame.add(resultLabel);
+
+        // Make the frame visible
+        frame.setVisible(true);
+    }
+}
